@@ -6,19 +6,9 @@ echo "-----> Installing PrinceXML $PRINCE_VERSION"
 (cd .downloads; [ -d "prince-$PRINCE_VERSION-linux-amd64-static" ] ||
   curl -s http://www.princexml.com/download/prince-$PRINCE_VERSION-linux-generic-x86_64.tar.gz | tar xzf -)
 
-LICENSE_PATH=$(cat $3/PRINCE_LICENSE)
-
-# https://devcenter.heroku.com/articles/buildpack-api#bin-compile
-BUILD_DIR=$1
-CACHE_DIR=$2
-ENV_DIR=$3
-
-LICENSE=${BUILD_DIR}/${LICENSE_PATH}
-
-if [ -f ${LICENSE} ]; then
+if [ -f $1/PRINCE_LICENSE ]; then
   echo "       Configuring license file"
-  echo "       Adding license at ${LICENSE_PATH} to prince"
-  cp ${LICENSE} ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/lib/prince/license/license.dat
+  cp $1/PRINCE_LICENSE ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/lib/prince/license/license.dat
 else
   echo "       No license found"
 fi
